@@ -1,0 +1,13 @@
+name: "NVM Install Node"
+description: "Installs a specific version of Node.js using NVM"
+inputs:
+  node-version:
+    description: "The version of Node.js to install"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - run: chmod +x ${{ github.action_path }}/install-node.sh
+      shell: bash
+    - run: ${{ github.action_path }}/install-node.sh ${{ inputs.node-version }}
+      shell: bash
