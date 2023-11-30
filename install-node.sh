@@ -6,5 +6,4 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
 nvm install $1
-nvm alias default $1
-nvm use default
+nvm use $1
