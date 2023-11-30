@@ -1,13 +1,20 @@
-name: "NVM Install Node"
-description: "Installs a specific version of Node.js using NVM"
+name: "Node.js Environment Setup"
+description: "Installs Node.js using NVM"
 inputs:
   node-version:
-    description: "The version of Node.js to install"
+    description: "Version of Node.js to install"
     required: true
+    default: "14" # Puedes poner aquí la versión por defecto que prefieras
+
 runs:
   using: "composite"
   steps:
-    - run: chmod +x ${{ github.action_path }}/install-node.sh
+    - name: Install NVM
       shell: bash
-    - run: ${{ github.action_path }}/install-node.sh ${{ inputs.node-version }}
+      run: |
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+        echo 'export NVM_DIR="$HOME/.nvm"' >> $GITHUB_ENV
+        echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $GITHUB_ENV
+    - name: Install Node.js
       shell: bash
+      run: nvm install ${{ inputs.node-version }}
